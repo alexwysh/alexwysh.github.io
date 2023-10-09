@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hello World Page</title>
-    <style>
-        /* Style for the popup */
-        #popup {<!DOCTYPE html>
-<html>
-
-<head>
     <meta charset="utf-8">
     <title>Pushwoosh Web SDK Sample</title>
+
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js" async></script>
     <script>
@@ -28,15 +21,11 @@
         }]);
     </script>
 </head>
-
 <body>
     <h1>Pushwoosh Web SDK usage sample</h1>
 
-
-
-
-    <style>
-        .push-notification-widget_hidden {
+<style>
+  .push-notification-widget_hidden {
     display: none;
   }
 
@@ -57,108 +46,55 @@
   }
 </style>
 
-
-
-
-
-
-    <div class="push-notification-widget push-notification-widget_hidden" id="push-notification-widget">
-        <div class="push-notification-widget__title">
-            Don't miss anything important — subscribe to push notifications!
-        </div>
     
-        <div class="push-notification-widget__control">
-            <button class="push-notification-widget__button" type="button" onClick="Pushwoosh.subscribe()">
-                Subscribe
-            </button>
-        </div>
-        <div class="push-notification-widget__success">
-            You're subscribed
-        </div>
-    </div>
-    <script>
-    var required = 1
+    <div class="push-notification-widget push-notification-widget_hidden" id="push-notification-widget">
+  <div class="push-notification-widget__title">
+    Don't miss anything important — subscribe to push notifications!
+  </div>
+  <div class="push-notification-widget__control">
+    <button class="push-notification-widget__button" type="button" onClick="Pushwoosh.subscribe()">
+      Subscribe
+    </button>
+  </div>
+  <div class="push-notification-widget__success">
+    You're subscribed
+  </div>
+</div>
 
 
-
-        var $subscriptionWidget = document.getElementById('push-notification-widget');
-        var Pushwoosh = Pushwoosh || [];
-        // show a success message if a device subscribes to push notifications
-        Pushwoosh.push(['onSubscribe', () => {
-            $subscriptionWidget.classList.add('push-notification-widget_subscribed');
-        }]);
-        Pushwoosh.push(() => {
-            /* now WebSDK is ready and you can use public methods. */
-            // create an array for Promise.all
-            var actions = [];
-            // check device's permission on push notifications
-            var permission = Pushwoosh.driver.getPermission();
-            // check whether a device is registered in Pushwoosh and can receive push notifications
-            var isSubscribed = Pushwoosh.isSubscribed();
-            actions.push(permission);
-            actions.push(isSubscribed);
-            // wait for all actions resolved
-            Promise.all(actions)
-                .then((result) => {
-                    var permission = result[0];
-                    var isSubscribed = result[1];
-
-
-                    // if push notifications are not blocked on a device (can show native permission prompt)
-                    // and if the device is not subscribed to push notifications (including manual unsubscribe)
-                    // show notification widget
-                    if (permission !== 'denied' && !isSubscribed) {
-                        $subscriptionWidget.classList.remove('push-notification-widget_hidden');
-                    }
-                });
-        });
-    </script>
-</body>
-
-</html>
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-    </style>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-
-    <!-- Popup HTML -->
-    <div id="popup">
-        <p>This is a one-time popup that will appear once every 24 hours.</p>
-        <button id="closePopup">Close</button>
-    </div>
 
     <script>
-        // Function to display the popup
-        function displayPopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'block';
+  var $subscriptionWidget = document.getElementById('push-notification-widget');
+  var Pushwoosh = Pushwoosh || [];
+  // show a success message if a device subscribes to push notifications
+  Pushwoosh.push(['onSubscribe', () => {
+    $subscriptionWidget.classList.add('push-notification-widget_subscribed');
+  }]);
+  Pushwoosh.push(() => {
+    /* now WebSDK is ready and you can use public methods. */
+    // create an array for Promise.all
+    var actions = [];
+    // check device's permission on push notifications
+    var permission = Pushwoosh.driver.getPermission();
+    // check whether a device is registered in Pushwoosh and can receive push notifications
+    var isSubscribed = Pushwoosh.isSubscribed();
+    actions.push(permission);
+    actions.push(isSubscribed);
+    // wait for all actions resolved
+    Promise.all(actions)
+      .then((result) => {
+        var permission = result[0];
+        var isSubscribed = result[1];
+        // if push notifications are not blocked on a device (can show native permission prompt)
+        // and if the device is not subscribed to push notifications (including manual unsubscribe)
+        // show notification widget
+        if (permission !== 'denied' && !isSubscribed) {
+          $subscriptionWidget.classList.remove('push-notification-widget_hidden');
         }
+      });
+  });
+</script>
 
-        // Function to close the popup
-        function closePopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none';
-        }
-
-        // Check if a cookie exists to determine if the popup has been shown
-        if (!document.cookie.includes('popupShown=true')) {
-            displayPopup();
-            // Set a cookie to remember that the popup has been shown
-            document.cookie = 'popupShown=true; expires=' + new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
-        }
-
-        // Close the popup when the "Close" button is clicked
-        document.getElementById('closePopup').addEventListener('click', closePopup);
-    </script>
+    
 </body>
 </html>
