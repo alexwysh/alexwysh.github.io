@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Pushwoosh Web SDK Sample</title>
-
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js" async></script>
     <script>
@@ -21,11 +21,11 @@
         }]);
     </script>
 </head>
+
 <body>
     <h1>Pushwoosh Web SDK usage sample</h1>
-
-<style>
-  .push-notification-widget_hidden {
+    <style>
+        .push-notification-widget_hidden {
     display: none;
   }
 
@@ -45,56 +45,66 @@
     display: block;
   }
 </style>
-
-    
     <div class="push-notification-widget push-notification-widget_hidden" id="push-notification-widget">
-  <div class="push-notification-widget__title">
-    Don't miss anything important — subscribe to push notifications!
-  </div>
-  <div class="push-notification-widget__control">
-    <button class="push-notification-widget__button" type="button" onClick="Pushwoosh.subscribe()">
-      Subscribe
-    </button>
-  </div>
-  <div class="push-notification-widget__success">
-    You're subscribed
-  </div>
-</div>
-
-
-
+        <div class="push-notification-widget__title">
+            Don't miss anything important — subscribe to push notifications!
+        </div>
+        <script>
+            // Save the current time in local storage
+            localStorage.setItem('lastPopupTime', Date.now());
+         </script>
+        <div class="push-notification-widget__control">
+            <button class="push-notification-widget__button" type="button" onClick="Pushwoosh.subscribe()">
+                Subscribe
+            </button>
+        </div>
+        <div class="push-notification-widget__success">
+            You're subscribed
+        </div>
+    </div>
     <script>
-  var $subscriptionWidget = document.getElementById('push-notification-widget');
-  var Pushwoosh = Pushwoosh || [];
-  // show a success message if a device subscribes to push notifications
-  Pushwoosh.push(['onSubscribe', () => {
-    $subscriptionWidget.classList.add('push-notification-widget_subscribed');
-  }]);
-  Pushwoosh.push(() => {
-    /* now WebSDK is ready and you can use public methods. */
-    // create an array for Promise.all
-    var actions = [];
-    // check device's permission on push notifications
-    var permission = Pushwoosh.driver.getPermission();
-    // check whether a device is registered in Pushwoosh and can receive push notifications
-    var isSubscribed = Pushwoosh.isSubscribed();
-    actions.push(permission);
-    actions.push(isSubscribed);
-    // wait for all actions resolved
-    Promise.all(actions)
-      .then((result) => {
-        var permission = result[0];
-        var isSubscribed = result[1];
-        // if push notifications are not blocked on a device (can show native permission prompt)
-        // and if the device is not subscribed to push notifications (including manual unsubscribe)
-        // show notification widget
-        if (permission !== 'denied' && !isSubscribed) {
-          $subscriptionWidget.classList.remove('push-notification-widget_hidden');
-        }
-      });
-  });
-</script>
+    var required = 1
 
-    
+    function checkPopup() {
+        const lastPopupTime = localStorage.getItem('lastPopupTime');
+        if (!lastPopupTime || (Date.now() - lastPopupTime > 24 * 60 * 60 * 1000)) {
+            var required = 1
+        } else { var required = 0 }
+
+
+
+        var $subscriptionWidget = document.getElementById('push-notification-widget');
+        var Pushwoosh = Pushwoosh || [];
+        // show a success message if a device subscribes to push notifications
+        Pushwoosh.push(['onSubscribe', () => {
+            $subscriptionWidget.classList.add('push-notification-widget_subscribed');
+        }]);
+        Pushwoosh.push(() => {
+            /* now WebSDK is ready and you can use public methods. */
+            // create an array for Promise.all
+            var actions = [];
+            // check device's permission on push notifications
+            var permission = Pushwoosh.driver.getPermission();
+            // check whether a device is registered in Pushwoosh and can receive push notifications
+            var isSubscribed = Pushwoosh.isSubscribed();
+            actions.push(permission);
+            actions.push(isSubscribed);
+            // wait for all actions resolved
+            Promise.all(actions)
+                .then((result) => {
+                    var permission = result[0];
+                    var isSubscribed = result[1];
+
+
+                    // if push notifications are not blocked on a device (can show native permission prompt)
+                    // and if the device is not subscribed to push notifications (including manual unsubscribe)
+                    // show notification widget
+                    if (permission !== 'denied' && !isSubscribed && required = 0) {
+                        $subscriptionWidget.classList.remove('push-notification-widget_hidden');
+                    }
+                });
+        });
+    </script>
 </body>
+
 </html>
