@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -26,44 +26,31 @@
 
 <style>
 
-   #popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
     
   .push-notification-widget_hidden {
             display: none;
-        }
+  }
 
   .push-notification-widget__success {
-            display: none;
-        }
+    display: none;
+  }
 
   .push-notification-widget_subscribed .push-notification-widget__title {
-            display: none;
-        }
+    display: none;
+  }
 
   .push-notification-widget_subscribed .push-notification-widget__control {
-            display: none;
-        }
+    display: none;
+  }
 
   .push-notification-widget_subscribed .push-notification-widget__success {
-            display: block;
-        }
-    
-
+    display: block;
+  }
 
     
 </style>
 
-<div id="popup">
+    
     <div class="push-notification-widget push-notification-widget_hidden" id="push-notification-widget">
   <div class="push-notification-widget__title">
     Don't miss anything important — subscribe to push notifications!
@@ -77,7 +64,7 @@
     You're subscribed
   </div>
 </div>
-</div>
+
 
 
     <script>
