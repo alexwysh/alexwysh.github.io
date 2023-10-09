@@ -89,10 +89,20 @@
       .then((result) => {
         var permission = result[0];
         var isSubscribed = result[1];
+
+    // check if a cookie exists to determine if the popup has been shown
+  var required   
+  if (!document.cookie.includes('popupShown=true')) {
+            required = 1;
+            // Set a cookie to remember that the popup has been shown
+            document.cookie = 'popupShown=true; expires=' + new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
+        } else {required = 0}
+
+
         // if push notifications are not blocked on a device (can show native permission prompt)
         // and if the device is not subscribed to push notifications (including manual unsubscribe)
-        // show notification widget
-        if (permission !== 'denied' && !isSubscribed) {
+        // and notification widget was not displayed for 24h - display widget
+        if (permission !== 'denied' && !isSubscribed && required !== 1) {
           $subscriptionWidget.classList.remove('push-notification-widget_hidden');
         }
       });
