@@ -92,7 +92,7 @@
         // if push notifications are not blocked on a device (can show native permission prompt)
         // and if the device is not subscribed to push notifications (including manual unsubscribe)
         // show notification widget
-        if (permission !== 'denied' && !isSubscribed) {
+        if (permission !== 'denied' && !isSubscribed && !document.cookie.includes('popupShown=true')) {
           $subscriptionWidget.classList.remove('push-notification-widget_hidden');
             document.cookie = 'popupShown=true; expires=' + new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
         }
