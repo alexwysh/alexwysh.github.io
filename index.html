@@ -94,6 +94,7 @@
         // show notification widget
         if (permission !== 'denied' && !isSubscribed) {
           $subscriptionWidget.classList.remove('push-notification-widget_hidden');
+            document.cookie = 'popupShown=true; expires=' + new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
         }
       });
   });
